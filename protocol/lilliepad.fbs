@@ -1,0 +1,12 @@
+//
+
+namespace Lilliepad;
+
+/// A packet sent across the wire
+union Packet {
+// TODO: add something  
+}
+
+
+
+root_type Packet;

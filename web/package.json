@@ -1,0 +1,9 @@
+{
+  "name": "lilliepad-web",
+  "version": "0.0.0",
+  "description": "the official web interface of lilliepad",
+  "main": "index.js",
+  "repository": "https://github.com/superwhiskers/lilliepad",
+  "author": "superwhiskers",
+  "license": "AGPL-3.0"
+}
