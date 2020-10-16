@@ -27,7 +27,6 @@ export const Message = (props: MessageProps, children: any) => {
             title={`sent ${props.time}`}
             dateTime={new Date(props.time).toISOString()}
           >
-            {/* todo: add module for this */}
             {timeAgo(props.time)}
           </time>
         </div>
