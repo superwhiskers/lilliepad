@@ -1,0 +1,22 @@
+.inputArea {
+  composes: flex flex-center flex-end from global;
+  background-color: var(--background-above);
+  padding: 0.5rem;
+  color: var(--text-color-faded);
+}
+
+.textInput {
+  composes: flex-1 from global;
+  height: 1em;
+  line-height: 1em;
+
+  padding: 0.3rem;
+  max-height: 40vh;
+  resize: none;
+
+  color: var(--text-color);
+
+  background: transparent;
+  outline: none;
+  border: none;
+}

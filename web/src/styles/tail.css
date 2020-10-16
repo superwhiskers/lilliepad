@@ -1,0 +1,72 @@
+/* "handwritten" tailwind like css classes */
+
+/* flex */
+
+.flex {
+  display: flex;
+}
+
+.flex-y {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-0 {
+  flex: 0;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-center {
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-end {
+  align-items: flex-end;
+}
+
+/* borders */
+
+.border {
+  border-width: 0;
+  border-style: solid;
+  border-color: var(--border-color);
+}
+
+.border.border-hover {
+  border-color: var(--inactive);
+}
+
+.border-hover:hover,
+.border-hover:focus-within {
+  border-color: rgb(var(--primary-color));
+}
+
+.border-bottom {
+  border-bottom-width: 1px;
+}
+
+.border-top {
+  border-top-width: 1px;
+}
+
+/* misc */
+
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-style-none {
+  list-style: none;
+}
+
+.list-style-none,
+.list-style-none > li {
+  margin: 0;
+  padding: 0;
+}

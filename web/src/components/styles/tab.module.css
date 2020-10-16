@@ -1,0 +1,6 @@
+.tab {
+  composes: flex flex-center item from global;
+
+  width: 10rem;
+  background-color: var(--background-above);
+}

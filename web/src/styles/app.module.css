@@ -1,0 +1,15 @@
+.messages {
+  composes: scrollable item flex-1 from global;
+  contain: strict;
+  overflow: auto;
+}
+
+.navbar {
+  composes: flex from global;
+}
+
+.search {
+  composes: button item flex flex-center from global;
+  width: 1rem;
+  margin-left: auto;
+}

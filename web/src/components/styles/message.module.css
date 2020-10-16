@@ -1,0 +1,30 @@
+.user,
+.header, 
+.main {
+}
+
+.message {
+  composes: item-y flex from global;
+}
+
+.user {
+  composes: flex flex-center from global;
+  width: 2rem;
+  padding: 0.25rem
+}
+
+.header {
+  composes: flex from global;
+}
+
+.displayName {
+}
+
+.time {
+  composes: tag from global;
+  margin-left: 0.25rem;
+}
+
+.main {
+  white-space: pre-wrap;
+}

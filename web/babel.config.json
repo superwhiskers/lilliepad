@@ -1,0 +1,22 @@
+{
+  "plugins": [
+    [
+      "@babel/plugin-transform-typescript",
+      {
+        "isTSX": true,
+        "jsxPragma": "h"
+      }
+    ],
+    [
+      "@babel/plugin-transform-react-jsx",
+      {
+        "pragma": "h",
+        "pragmaFrag": "Fragment",
+        "throwIfNamespace": true,
+        "runtime": "classic",
+        "useBuiltIns": true,
+        "useNativeSpread": true
+      }
+    ]
+  ]
+}

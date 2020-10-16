@@ -1,0 +1,14 @@
+.item {
+  composes: item flex from global;
+}
+
+.icon {
+  composes: flex flex-center from global;
+  width: 2rem;
+  margin-right: 0.5rem;
+}
+
+.tags {
+  composes: flex from global;
+  grid-gap: 0.25rem;
+}

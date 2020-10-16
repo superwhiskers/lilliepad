@@ -1,0 +1,17 @@
+:root {
+  --primary-color: 133, 101, 196;
+  --color-grey: #6e6e71;
+
+  --text-color: #ceced1;
+  --text-color-faded: var(--color-grey);
+
+  --background-bottom: #18191d;
+  --background-above: #25252e;
+
+  --border-color: rgb(100, 70, 150);
+  
+  --scrollbar-color: #a0a0b0;
+  --scrollbar-background-color: #ccc3;
+  
+  --inactive: #787878;
+}
