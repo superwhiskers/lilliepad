@@ -1,5 +1,6 @@
 import { h } from 'sinuous'
 import styles from './styles/message.module.css'
+import { timeAgo } from '../utils'
 
 interface MessageProps {
   // todo: just add a user: User prop
@@ -27,7 +28,7 @@ export const Message = (props: MessageProps, children: any) => {
             dateTime={new Date(props.time).toISOString()}
           >
             {/* todo: add module for this */}
-            just now
+            {timeAgo(props.time)}
           </time>
         </div>
         <main class={styles.main}>{children}</main>
