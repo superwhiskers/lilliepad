@@ -7,7 +7,7 @@
   "license": "AGPL-3.0",
   "scripts": {
     "dev": "snowpack dev",
-    "typecheck": "tsc --noemit"
+    "types": "tsc --noemit"
   },
   "dependencies": {
     "normalize.css": "^8.0.1",
