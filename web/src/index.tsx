@@ -12,43 +12,23 @@ import { Message } from './components/message'
 import { Item } from './components/item'
 import styles from './styles/app.module.css'
 
+import type { Message as IMessage } from './types/message'
+
 import { scrollToBottom } from './utils.js'
 Fragment // use fragment so it's not removed
 
 import * as state from './state'
 
-// todo: actual state
-const searchHistory = o(
+state.search.history(
   Array(20)
     .fill(0)
-    .map((_, i) => (
-      <Item
-        data-key={i}
-        name="#general"
-        icon={'https://avatars1.githubusercontent.com/u/10212424'}
-      >
-        GeneralChat
-      </Item>
-    ))
+    .map((_, i) => ({
+      id: i,
+      name: '#general',
+      icon: 'https://avatars1.githubusercontent.com/u/10212424',
+      desc: 'GeneralChat',
+    }))
 )
-
-// todo: move these to a shared types module
-interface IUser {
-  id: number
-  username: string
-  avatar_url: string
-}
-
-interface IContent {
-  text: string
-}
-
-interface IMessage {
-  id: number
-  timestamp: number
-  content: IContent
-  author: IUser
-}
 
 const default_message = (id: number): IMessage => ({
   id: id,
@@ -68,6 +48,7 @@ const messages: Observable<IMessage[]> = o(
     .fill(0)
     .map((_, i) => default_message(i))
 )
+
 const Messages = (
   <div class={styles.messages}>
     {map(messages, (msg) => (
@@ -85,7 +66,7 @@ const Messages = (
 
 setInterval(
   () => messages(messages().concat([default_message(Date.now())])),
-  1000
+  2000
 )
 
 subscribe(() => {
@@ -97,7 +78,7 @@ subscribe(() => {
 
 const app = (
   <>
-    <Search enabled={state.search.enabled} results={searchHistory} />
+    <Search enabled={state.search.enabled} results={state.search.history} />
     <nav class={styles.navbar}>
       <Tab name="general" />
       <a

@@ -3,13 +3,20 @@ import { map } from 'sinuous/map'
 import { o, subscribe, Observable } from 'sinuous/observable'
 import styles from './styles/search.module.css'
 import { cls } from '../utils.js'
-import type { Item } from './item'
+import type { TabItem } from '../state'
+import { Item } from './item'
 import Combobox from '@github/combobox-nav'
 
 interface SearchProps {
-  results?: Observable<ReturnType<typeof Item>[]>
+  results?: Observable<TabItem[]>
   enabled?: Observable<boolean>
 }
+
+export const SearchItem = (item: TabItem) => (
+  <Item data-key={item.id} name={item.name} icon={item.icon}>
+    {item.desc}
+  </Item>
+)
 
 let unique = 0
 export const Search = (props: SearchProps = {}) => {
@@ -48,7 +55,7 @@ export const Search = (props: SearchProps = {}) => {
       id={`list-id-${unique}`}
       attrs={{ role: 'listbox' }}
     >
-      {map(results, (r) => (
+      {map(results, (item) => (
         <li
           class={styles.searchResult}
           data-index={i++}
@@ -60,7 +67,7 @@ export const Search = (props: SearchProps = {}) => {
             combobox.navigate(1)
           }}
         >
-          {r}
+          {SearchItem(item)}
         </li>
       ))}
     </ol>
