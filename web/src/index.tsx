@@ -1,6 +1,7 @@
 import './css'
 
-import { h, o } from 'sinuous'
+import { h } from 'sinuous'
+import { o, subscribe } from 'sinuous/observable'
 import { Search } from './components/search'
 import { Tab } from './components/tab'
 import { Fragment } from './components/fragment'
@@ -8,6 +9,7 @@ import { InputArea } from './components/input-area'
 import { Message } from './components/message'
 import { Item } from './components/item'
 import styles from './styles/app.module.css'
+import { scrollToBottom } from './utils.js'
 Fragment // use fragment so it's not removed
 
 import * as state from './state'
@@ -27,19 +29,27 @@ const searchHistory = o(
     ))
 )
 
-const messages = o(
-  Array(10)
-    .fill(0)
-    .map(() => (
-      <Message
-        displayName="bree"
-        icon="https://avatars1.githubusercontent.com/u/11599528?s=48"
-        time={Date.now()}
-      >
-        hello world
-      </Message>
-    ))
+const DefaultMessage = () => (
+  <Message
+    displayName="bree"
+    icon="https://avatars1.githubusercontent.com/u/11599528?s=48"
+    time={Date.now()}
+  >
+    hello world
+  </Message>
 )
+
+const messages = o(Array(10).fill(0).map(DefaultMessage))
+const Messages = <div class={styles.messages}>{messages}</div>
+
+setInterval(() => messages(messages().concat([DefaultMessage()])), 2000)
+
+subscribe(() => {
+  messages()
+  scrollToBottom(Messages, {
+    max: Messages.lastElementChild?.clientHeight ?? 0 + 50,
+  })
+})
 
 const app = (
   <>
@@ -55,7 +65,7 @@ const app = (
         🔎
       </a>
     </nav>
-    <div class={styles.messages}>{messages}</div>
+    {Messages}
     <InputArea />
   </>
 )

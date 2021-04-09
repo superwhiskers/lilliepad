@@ -1,6 +1,6 @@
 import { h } from 'sinuous'
 import styles from './styles/message.module.css'
-import { timeAgo } from '../utils'
+import { timeAgo } from '../utils/time_ago'
 
 interface MessageProps {
   // todo: just add a user: User prop

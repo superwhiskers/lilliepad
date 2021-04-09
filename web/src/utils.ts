@@ -2,34 +2,12 @@
  * where every key is a class name and value is a boolean representing if a class should be represented
  */
 export const cls = (obj: (boolean | string)[]): string =>
-  obj.reduce<string>((res, key) => (key ? `${res} ${key}` : res), '')
+  obj.reduce<string>((res, key) => (key ? `${res} ${key}` : res), "");
 
-// adapted from https://github.com/simonlc/epoch-timeago/blob/master/src/index.js
-// should a little tinier
-
-const timeSegments = [
-  3.154e10,
-  2.628e9,
-  6.048e8,
-  8.64e7,
-  3.6e6,
-  60000,
-  -Infinity,
-]
-
-const timeUnits = ['year', 'month', 'week', 'day', 'hour', 'minute', 'just now']
-
-const makeTimeString = (unit: string, timeSegment: number, time: number) =>
-  time >= 2 * timeSegment
-    ? `${Math.floor(time / timeSegment)} ${unit} ago`
-    : `1 ${unit} ago`
-
-export const timeAgo = (timestamp: number) => {
-  const timeDifference = Date.now() - timestamp
-
-  const index = timeSegments.findIndex((time) => timeDifference >= time)
-  const unit = timeUnits[index]
-  return index >= 6
-    ? unit
-    : makeTimeString(unit, timeSegments[index], timeDifference)
-}
+export const scrollToBottom = (el: HTMLElement, { max = 50 } = {}) =>
+  requestAnimationFrame(() => {
+    if (Math.abs(el.scrollHeight - el.scrollTop - el.clientHeight) <= max) {
+      // el.scrollTop = el.scrollHeight;
+      el.scrollTo(0, el.scrollHeight);
+    }
+  });

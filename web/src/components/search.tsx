@@ -2,7 +2,7 @@ import { h, JSX } from 'sinuous'
 import { map } from 'sinuous/map'
 import { o, subscribe, Observable } from 'sinuous/observable'
 import styles from './styles/search.module.css'
-import { cls } from '../utils'
+import { cls } from '../utils.js'
 import type { Item } from './item'
 import Combobox from '@github/combobox-nav'
 
@@ -36,6 +36,11 @@ export const Search = (props: SearchProps = {}) => {
     />
   ) as HTMLInputElement
 
+  searchInput.addEventListener('blur', (ev) => {
+    disable()
+    return
+  })
+
   let i = 0
   const searchResults = (
     <ol
@@ -63,6 +68,7 @@ export const Search = (props: SearchProps = {}) => {
 
   // todo(bree): temporary until we (I) make our own.
   // todo: remove combobox
+  // note: combobox is used here for performance
   combobox = new Combobox(searchInput, searchResults)
 
   const search = (
@@ -84,7 +90,7 @@ export const Search = (props: SearchProps = {}) => {
   window.addEventListener('keydown', (ev) => {
     if (ev.key === 'Escape') {
       ev.preventDefault()
-      searchInput.blur()
+      disable()
       return
     }
     if (ev.ctrlKey && ev.key === 'p') {
