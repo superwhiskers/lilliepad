@@ -71,8 +71,10 @@ setInterval(
 
 subscribe(() => {
   messages()
-  scrollToBottom(Messages, {
-    max: Messages.lastElementChild?.clientHeight ?? 0 + 50,
+  requestAnimationFrame(() => {
+    scrollToBottom(Messages, {
+      max: Messages.lastElementChild?.clientHeight,
+    })
   })
 })
 
