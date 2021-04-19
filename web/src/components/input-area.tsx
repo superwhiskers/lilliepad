@@ -26,7 +26,7 @@ export const InputArea = () => {
   return (
     <div class={styles.inputArea}>
       <TextInput class="scrollable" />
-      <a class="button flex flex-center flex-0">➤</a>
+      <button class="button flex flex-center flex-0">➤</button>
     </div>
   )
 }

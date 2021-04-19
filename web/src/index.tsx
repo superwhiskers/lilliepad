@@ -86,14 +86,14 @@ const app = (
     <Search enabled={state.search.enabled} results={state.search.history} />
     <nav class={styles.navbar}>
       <Tab name="general" />
-      <a
+      <button
         class={styles.search}
         attrs={{ role: 'button' }}
         onClick={state.search.toggle}
       >
         {/* todo: actual icons maybe */}
         🔎
-      </a>
+      </button>
     </nav>
     {Messages}
     <InputArea />
