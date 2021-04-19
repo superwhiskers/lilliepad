@@ -2,7 +2,7 @@ import './css'
 
 import { h } from 'sinuous'
 import { map } from 'sinuous/map'
-import { o, Observable, subscribe } from 'sinuous/observable'
+import { o, Observable, on } from 'sinuous/observable'
 
 import { Search } from './components/search'
 import { Tab } from './components/tab'
@@ -44,7 +44,7 @@ const default_message = (id: number): IMessage => ({
 })
 
 const messages: Observable<IMessage[]> = o(
-  Array(10)
+  Array(20)
     .fill(0)
     .map((_, i) => default_message(i))
 )
@@ -69,13 +69,16 @@ setInterval(
   2000
 )
 
-subscribe(() => {
-  messages()
-  requestAnimationFrame(() => {
-    scrollToBottom(Messages, {
-      max: Messages.lastElementChild?.clientHeight,
-    })
-  })
+// todo: improve perforamnce here
+on([messages], () => {
+  const scrollBottom = Messages.scrollHeight - Messages.scrollTop - Messages.clientHeight
+  const lastElement = Messages.lastElementChild
+  if (lastElement) {
+    const lastHeight = Messages.lastElementChild?.clientHeight ?? 0
+    if (scrollBottom < lastHeight) {
+      lastElement.scrollIntoView()
+    }
+  }
 })
 
 const app = (
