@@ -49,3 +49,7 @@ impl Item for Message {
   }
 }
 ```
+
+# Accessibility
+
+Where possible please use the `*-block-start`, `*-inline-end`, and similar css properties instead of just `padding` for better accessbility if the text direction changes.

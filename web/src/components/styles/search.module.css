@@ -8,7 +8,7 @@
   height: auto;
   left: 25%;
 
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
   background-color: var(--background-above);
   visibility: hidden;
 
@@ -21,6 +21,8 @@
 
 .header {
   composes: flex border border-bottom border-hover from global;
+  padding-block: 0.5rem;
+  padding-inline: 0.5rem 0.25rem;
 }
 
 .searchInput {

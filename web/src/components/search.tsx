@@ -43,10 +43,12 @@ export const Search = (props: SearchProps = {}) => {
     />
   ) as HTMLInputElement
 
-  searchInput.addEventListener('blur', (ev) => {
-    disable()
-    return
-  })
+  // note: commited out to make debugging easier, 
+  //       in the future this should be handled through a debug flag 
+  // searchInput.addEventListener('blur', (ev) => {
+  //   disable()
+  //   return
+  // })
 
   let i = 0
   const searchResults = (
@@ -82,24 +84,27 @@ export const Search = (props: SearchProps = {}) => {
     <div class={() => cls([styles.search, enabled() && styles.enabled])}>
       <div class={styles.header}>
         {searchInput}
-        <a
+        <button
           class={styles.closeButton}
           attrs={{ role: 'button' }}
           onClick={disable}
         >
           ✖
-        </a>
+        </button>
       </div>
       {searchResults}
     </div>
   )
 
+  // todo: when escape is pressed the user may just want to stop selecting an item in the combobox, 
+  //       or escape the tab trap so that they can tab to the close button (kinda weird I know but idk)  
   window.addEventListener('keydown', (ev) => {
     if (ev.key === 'Escape') {
       ev.preventDefault()
       disable()
       return
     }
+
     if (ev.ctrlKey && ev.key === 'p') {
       ev.preventDefault()
       toggle()
