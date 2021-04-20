@@ -1,4 +1,6 @@
 import { h } from 'sinuous'
+import { Icon } from './icon'
+
 import styles from './styles/tab.module.css'
 
 interface SearchProps {
@@ -13,7 +15,7 @@ export const Tab = (props: SearchProps = {}) => {
   return (
     <div class={styles.tab}>
       <span class="truncate-text flex-1">{name}</span>
-      <span class="">✖</span>
+      <button class={styles.close}><Icon name="x" /></button>
     </div>
   )
 }

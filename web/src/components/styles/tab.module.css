@@ -4,3 +4,10 @@
   width: 10rem;
   background-color: var(--background-above);
 }
+
+.close {
+  composes: button flex flex-center from global;
+  contain: strict;
+  aspect-ratio: 1.25 / 1;
+  height: 100%;
+}

@@ -1,6 +1,7 @@
 # Notes
+###### these notes need cleanup
 
-## Css containment
+# Css containment
 
 Somehow css containment reduces performance in lists, so it should be used sparingly.
 

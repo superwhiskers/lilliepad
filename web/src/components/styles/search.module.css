@@ -8,6 +8,8 @@
   height: auto;
   left: 25%;
 
+  border-radius: 5px;
+
   /* padding: 0.5rem; */
   background-color: var(--background-above);
   visibility: hidden;
@@ -35,6 +37,7 @@
 
 .closeButton {
   composes: button flex flex-center from global;
+  
   contain: strict;
   aspect-ratio: 1 / 1;
   height: 100%;

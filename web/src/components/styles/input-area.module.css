@@ -24,6 +24,6 @@
 .button {
   composes: button flex flex-center from global;
   contain: strict;
-  aspect-ratio: 1.25 / 1;
-  height: 100%;
+  aspect-ratio: 1.5 / 1;
+  height: calc(0.5rem + 1em);
 }

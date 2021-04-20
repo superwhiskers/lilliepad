@@ -66,7 +66,12 @@ const Messages = (
 )
 
 setInterval(
-  () => messages(messages().concat([default_message(Date.now())])),
+  () => {
+    let msgs = messages();
+    if (msgs.length < 100) {
+      messages(msgs.concat([default_message(Date.now())]))
+    }
+  },
   2000
 )
 
