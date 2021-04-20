@@ -18,7 +18,7 @@
 }
 
 .search {
-  composes: button flex flex-center from global;
+  composes: button item flex flex-center from global;
   contain: strict;
   aspect-ratio: 1 / 1;
   height: 100%;

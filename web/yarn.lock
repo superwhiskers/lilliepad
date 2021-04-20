@@ -353,6 +353,11 @@
     execa "^4.0.3"
     npm-run-path "^4.0.1"
 
+"@tabler/icons@^1.40.2":
+  version "1.40.2"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-1.40.2.tgz#92bb287b8d09cf4e10012dbec320dc944c5d3375"
+  integrity sha512-JPMg7NpdJ45DdSTn1SPP43KSjXrtGqw62M7o+iY1uWZJrXK2hm2tv6fuVLlDeRqLAnwBcDROKvwpIpteJT9j+Q==
+
 "@types/estree@*":
   version "0.0.45"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.45.tgz#e9387572998e5ecdac221950dab3e8c3b16af884"
