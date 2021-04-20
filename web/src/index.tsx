@@ -10,6 +10,7 @@ import { Fragment } from './components/fragment'
 import { InputArea } from './components/input-area'
 import { Message } from './components/message'
 import { Item } from './components/item'
+import { Icon } from './components/icon'
 import styles from './styles/app.module.css'
 
 import type { Message as IMessage } from './types/message'
@@ -92,7 +93,7 @@ const app = (
         onClick={state.search.toggle}
       >
         {/* todo: actual icons maybe */}
-        🔎
+        <Icon name="search" />
       </button>
     </nav>
     {Messages}

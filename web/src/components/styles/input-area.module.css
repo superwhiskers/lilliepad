@@ -20,3 +20,10 @@
   outline: none;
   border: none;
 }
+
+.button {
+  composes: button flex flex-center from global;
+  contain: strict;
+  aspect-ratio: 1.25 / 1;
+  height: 100%;
+}

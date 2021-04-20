@@ -5,6 +5,7 @@ import styles from './styles/search.module.css'
 import { cls } from '../utils.js'
 import type { TabItem } from '../state'
 import { Item } from './item'
+import { Icon } from './icon'
 import Combobox from '@github/combobox-nav'
 
 interface SearchProps {
@@ -89,7 +90,7 @@ export const Search = (props: SearchProps = {}) => {
           attrs={{ role: 'button' }}
           onClick={disable}
         >
-          ✖
+          <Icon name="x" />
         </button>
       </div>
       {searchResults}

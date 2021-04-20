@@ -53,3 +53,7 @@ impl Item for Message {
 # Accessibility
 
 Where possible please use the `*-block-start`, `*-inline-end`, and similar css properties instead of just `padding` for better accessbility if the text direction changes.
+
+# Icons
+
+Currently icons don't have a consistent width/height or anything, I'd like to change this in the future.

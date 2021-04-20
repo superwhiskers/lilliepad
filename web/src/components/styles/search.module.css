@@ -35,9 +35,9 @@
 
 .closeButton {
   composes: button flex flex-center from global;
-  width: 1.5rem;
-  margin-left: auto;
   contain: strict;
+  aspect-ratio: 1 / 1;
+  height: 100%;
   opacity: 0.5;
 }
 
