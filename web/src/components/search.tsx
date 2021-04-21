@@ -89,6 +89,7 @@ export const Search = (props: SearchProps = {}) => {
           class={styles.closeButton}
           attrs={{ role: 'button' }}
           onClick={disable}
+          aria-label="Close"
         >
           <Icon name="x" />
         </button>

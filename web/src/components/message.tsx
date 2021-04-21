@@ -17,7 +17,7 @@ export const Message = (props: MessageProps, children: any) => {
   return (
     <article class={styles.message}>
       <div class={styles.user}>
-        <img class="icon" src={props.icon} width={24} height={24} />
+        <img class="icon" src={props.icon} width={24} height={24} alt={`${props.displayName}'s avatar`} />
       </div>
       <div class="flex-1 flex-y">
         <div class={styles.header}>

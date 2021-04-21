@@ -27,7 +27,7 @@ export const InputArea = () => {
   return (
     <div class={styles.inputArea}>
       <TextInput class="scrollable" />
-      <button class={styles.button}><Icon name="send" /></button>
+      <button class={styles.button} aria-label="Send"><Icon name="send" /></button>
     </div>
   )
 }

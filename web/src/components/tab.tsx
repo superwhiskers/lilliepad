@@ -15,7 +15,7 @@ export const Tab = (props: SearchProps = {}) => {
   return (
     <div class={styles.tab}>
       <span class="truncate-text flex-1">{name}</span>
-      <button class={styles.close}><Icon name="x" /></button>
+      <button class={styles.close} aria-label="Close"><Icon name="x" /></button>
     </div>
   )
 }

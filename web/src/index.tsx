@@ -96,6 +96,7 @@ const app = (
         class={styles.search}
         attrs={{ role: 'button' }}
         onClick={state.search.toggle}
+        aria-label="Search"
       >
         {/* todo: actual icons maybe */}
         <Icon name="search" />
