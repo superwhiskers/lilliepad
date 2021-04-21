@@ -58,3 +58,22 @@ Where possible please use the `*-block-start`, `*-inline-end`, and similar css p
 # Icons
 
 Currently icons don't have a consistent width/height or anything, I'd like to change this in the future.
+
+# i18n
+
+Support for i18n translations should be handled from the start
+
+# Tabs
+
+Tabs at some point should have multiple settings for how they're displayed
+
+Style
+- icon only
+- text only
+- text + icons
+
+Position
+- inline start
+- inline end
+- block start
+- block end
