@@ -6,7 +6,12 @@ body {
 html {
   background-color: var(--background-bottom);
   color: var(--text-color);
-  font-family: 'Inter var', sans-serif;
+  font-family: 'Inter', sans-serif;
+}
+@supports (font-variation-settings: normal) {
+  body {
+    font-family: 'Inter var', sans-serif;
+  }
 }
 
 .button {

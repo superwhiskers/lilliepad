@@ -8,6 +8,26 @@
     <script type="module" src="/src/index.js"></script>
   </head>
   <body class="flex-y">
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      you need to enable javascript to run this app
+      <style>
+        body {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          width: 100vw;
+          margin: 0;
+          font-family: 'Inter', sans-serif;
+          background: #18191d;
+          color: #ceced1;
+        }
+        @supports (font-variation-settings: normal) {
+          body {
+            font-family: 'Inter var', sans-serif;
+          }
+        }
+      </style>
+    </noscript>
   </body>
 </html>
