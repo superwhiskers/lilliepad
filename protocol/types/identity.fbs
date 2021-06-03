@@ -14,10 +14,26 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
+namespace Lilliepad.Types;
+
+/// An enumeration over all possible transports
+enum Transport: uint8 {
+  Udp,
+  Tcp,
+  Websocket,
+}
+
+/// A structure containing information about a service
+table Service {
+  Name: string;
+  Description: string;
+}
+
+/// Server identifying information
+table Identity {
+  Transports: [Transport];
+
+  // these are not hardcoded as the client doesn't need to really need to know
+  // much about what a protocol is / how it works
+  Services: [Service];
 }

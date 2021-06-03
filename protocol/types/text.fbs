@@ -14,17 +14,49 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Lilliepad;
+namespace Lilliepad.Types;
 
-include "packets/pull.fbs";
-include "packets/push.fbs";
-include "packets/update.fbs";
+include "./id.fbs";
 
-/// An enumeration over all possible packets in the protocol
-union Packet {
-  Pull: Pull,
-  Push: Push,
-  Update: Update,
+/// Formattable text laid out in a row, wrapped
+enum Text: uint8 {
+  Plain: string,
+  Formatted: Formatted,
+  Code: Code,
+  Mention: Mention,
+  Quote: [Text];
+  Reference: Reference,
 }
 
-root_type Packet;
+/// A reference to another user
+table Mention {
+  User: Id;
+  Content: [Text];
+}
+
+/// A generic reference following the uri defintion
+table Reference {
+  Uri: string;
+  Content: [Text];
+}
+
+/// A code block with an optional associated syntax
+table Code {
+  Syntax: string;
+  Content: string;
+}
+
+/// A text segment with associated formatting
+table Formatted {
+  Formatting: Formatting (bit_flags);
+  Content: string;
+}
+
+/// An enumeration over different kinds of formatting options
+enum Formatting: uint16 {
+  Italics,
+  Bold,
+  Underline,
+  Strikethrough,
+  Monospace,
+}

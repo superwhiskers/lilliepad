@@ -14,10 +14,41 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
+namespace Lilliepad.Types;
+
+include "./text.fbs";
+
+/// A component of a UI group
+union UiComponent {
+  Text: [Text],
+  File: string,
+  Button: Button,
+  Textbox: Textbox,
+  Row: [UiComponent],
+}
+
+/// A clickable button
+table Button {
+  Enabled: bool;
+  Clicked: bool;
+  Label: [Text];
+  Color: Color;
+
+  OnPress: EventHandler;
+}
+
+/// A text box, used for containing some editable text
+table Textbox {
+  Placeholder: [Text];
+  Content: [Text];
+
+  OnContent: EventHandler;
+  OnSubmit: EventHandler;
+}
+
+/// A theme color, enumerated by intent and not actual color
+enum Color: uint8 {
+  Accent,
+  Default,
+  Error,
 }

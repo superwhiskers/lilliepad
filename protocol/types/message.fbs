@@ -14,10 +14,29 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
+namespace Lilliepad.Types;
+
+include "./id.fbs";
+include "./text.fbs";
+
+//TODO: add handlers
+//TODO: handle message responses
+//TODO: add discord embeds
+
+/// A structure representing a message
+///
+/// If the components field is omitted, it has been deleted.
+/// If the message id is omitted, then it is being sent.
+table Message {
+  Id: Id;
+  Group: Id;
+  Author: Id;
+  Components: [MessageComponent];
+}
+
+/// A component of a message, laid out in a column by default.
+union MessageComponent {
+  Text: [Text],
+  File: string, // kind determined by served mimetype
+  Embed
 }
