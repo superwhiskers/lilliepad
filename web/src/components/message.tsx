@@ -8,7 +8,7 @@ import { useRevolt } from '../state/revolt'
 import * as ulid from 'ulid'
 import { generateDefaultAvatarUrl } from '../revolt/api/users'
 
-type MessageProps = JSX.HTMLAttributes<HTMLDivElement> & {
+type MessageProps = JSX.HTMLAttributes<HTMLElement> & {
   message: DeepReadonly<RevoltMessage>
 }
 
@@ -16,13 +16,13 @@ const dtf = new Intl.DateTimeFormat([], {
   timeStyle: "short"
 })
 
-export const Message: Component<MessageProps> = ({ message, ...divProps }) => {
+export const Message: Component<MessageProps> = ({ message, ...props }) => {
   const revolt = useRevolt()
   const [author] = createResource(message.author, a => revolt.fetchUser(a))
 
   const timestamp = ulid.decodeTime(message._id)
 
-  return <div class="Message" {...divProps}>
+  return <article class="Message" {...props}>
     <img
       class="avatar"
       src={message.masquerade?.avatar ?? author() ? revolt.getAvatarUrl(author()!) : generateDefaultAvatarUrl(message.author)}
@@ -45,5 +45,5 @@ export const Message: Component<MessageProps> = ({ message, ...divProps }) => {
       </time>
     </div>
     <div class="message-text" textContent={typeof message.content === 'string' ? message.content : message.content.type} />
-  </div>
+  </article>
 }

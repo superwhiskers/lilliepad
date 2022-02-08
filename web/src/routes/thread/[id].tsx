@@ -16,9 +16,12 @@ type MessageListProps = {
 }
 
 const MessageList: Component<MessageListProps> = (props) => {
-  return <For each={props.messages}>
-    {(item) => <Message message={item} />}
-  </For>
+  // todo: thread name
+  return <ol aria-label={`Messages in thread`}>
+    <For each={props.messages}>
+      {(item) => <li><Message message={item} /></li>}
+    </For>
+  </ol>
 }
 
 export default function Thread() {
@@ -59,11 +62,9 @@ export default function Thread() {
   createResource(() => params.id, loadInitial)
 
   return <>
-    <div class="msg-container scrollbar">
+    <div class="Thread msg-container scrollbar">
       <div style={{ flex: 1 }} />
-      <div class="msgs" role="log">
-        <MessageList messages={messages()} />
-      </div>
+      <MessageList messages={messages()} />
       <Show when={!isLoading() && canLoadMore()}>
         <button onclick={loadMore}>Load more...</button>
       </Show>

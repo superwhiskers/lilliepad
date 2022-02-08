@@ -1,4 +1,16 @@
-.msg-container {
-  // temporary
+.Thread {
+  overflow: auto;
 
+  display: flex;
+  flex-direction: column-reverse;
+
+  background-color: var(--primary-background);
+
+  ol {
+    display: flex;
+    flex-direction: column-reverse;
+
+    margin: 0;
+    padding: 0;
+  }
 }

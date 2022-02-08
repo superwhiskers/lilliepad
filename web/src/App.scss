@@ -71,20 +71,6 @@ header {
   }
 }
 
-.msg-container {
-  overflow: auto;
-
-  display: flex;
-  flex-direction: column-reverse;
-
-  background-color: var(--primary-background);
-}
-
-.msgs {
-  display: flex;
-  flex-direction: column-reverse;
-}
-
 // todo: tabbing accessability
 // button:focus-visible {
 //   position: relative;
