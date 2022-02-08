@@ -1,3 +1,7 @@
+## Warning
+
+This branch is currently intended for prototyping, beware of code.
+
 ## Usage
 
 Those templates dependencies are maintained via [pnpm](https://pnpm.js.org/) via `pnpm up -Lri`.
