@@ -1,0 +1,38 @@
+.MessageForm {
+  display: flex;
+  border-block-start: 1px solid rgb(var(--color-primary));
+
+  .icon {
+    // sized and aligned with profile picture
+    padding-inline: 0.75ch;
+    width: 1.25rem;
+    height: 2.25rem;
+    place-self: end;
+
+    // keep clickable area to make easier to click
+    // padding-inline: 0.75ch;
+  }
+
+  textarea {
+    all: unset;
+
+    flex: 1;
+    padding: 1ch 0;
+    white-space: pre;
+
+    max-height: 55vh;
+    width: 100%;
+
+    caret-color: rgb(var(--color-primary));
+
+    overflow-y: auto;
+  }
+
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+
+    > * {
+      pointer-events: none;
+    }
+  }
+}

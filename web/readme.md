@@ -1,28 +1,33 @@
-# Official lilliepad client for the web
+## Usage
 
-## Todo
+Those templates dependencies are maintained via [pnpm](https://pnpm.js.org/) via `pnpm up -Lri`.
 
-> a basic lilliepad-web todo list in no specific order
+This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
 
-- [ ] css/code cleanup
-- [ ] loading/startup screen
-- [ ] different services
-- [ ] options
-- [ ] tags
-- [ ] Complex state management though wasm
-  - [ ] searching tags
-- [ ] change the build process to produce cleaner code
-  - [ ] change the way css modules are generated
-    - [ ] add css at compile time rather than at runtime
-    - [ ] make identifiers more consistent (base on filename only for scoping without unique id for to make it easier to theme)
-- [ ] use sinuous templates where possible (items, maybe messages)
-- [ ] clean up html to be more semantically accurate and accessible
-  - [ ] aria attributes
-  - [ ] basic screenreader support
-- [ ] better default styling/theming
-- [ ] github actions to github pages
-- [ ] entity format for messages and markup
-- [ ] icons
-- [ ] performance benchmarking and optimizations (continuous)
-  - [ ] benchmarks of some kind
-  - [ ] tests of some kind
+```bash
+$ npm install # or pnpm install or yarn install
+```
+### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `npm dev` or `npm start`
+
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.<br>
+
+### `npm run build`
+
+Builds the app for production to the `dist` folder.<br>
+It correctly bundles Solid in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
+
+## Deployment
+
+You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)

@@ -1,13 +1,39 @@
-/**
- * where every key is a class name and value is a boolean representing if a class should be represented
- */
-export const cls = (obj: (boolean | string)[]): string =>
-  obj.reduce<string>((res, key) => (key ? `${res} ${key}` : res), "");
+export const wait = async (ms: number) =>
+  new Promise((res) => setTimeout(res, ms));
 
-export const scrollToBottom = (el: HTMLElement, { max = 25 } = {}) =>
-  requestAnimationFrame(() => {
-    if (Math.abs(el.scrollHeight - el.scrollTop - el.clientHeight) <= max * 2) {
-      // el.scrollTop = el.scrollHeight;
-      el.scrollTo(0, el.scrollHeight);
-    }
-  });
+// Partially adapted from solid-primatives
+/**
+ * Creates a method that is throttled and cancellable.
+ *
+ * @param callback The callback to throttle
+ * @param ms The duration to throttle
+ * @returns The throttled callback trigger
+ *
+ * @example
+ * ```ts
+ * const [trigger, clear] = createThrottle((val) => console.log(val), 250));
+ * trigger('my-new-value');
+ * ```
+ */
+export const createThrottle = <
+  T extends (...args: any[]) => void,
+  A = Parameters<T>,
+>(
+  func: T,
+  ms: number,
+): [
+  fn: (...args: A extends any[] ? A : never) => void,
+  clear: () => void,
+] => {
+  let lastThrottled = 0;
+  return [
+    (...args) => {
+      const now = Date.now();
+      if (now - lastThrottled > ms) {
+        func(...args);
+        lastThrottled = now;
+      }
+    },
+    () => lastThrottled = 0,
+  ];
+};

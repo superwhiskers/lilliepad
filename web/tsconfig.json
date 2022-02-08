@@ -1,18 +1,15 @@
 {
-  "include": ["types/**/*", "src/**/*"],
   "compilerOptions": {
-    "plugins": [{ "name": "typescript-plugin-css-modules" }],
-    "target": "es2020",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "lib": ["es2020", "dom"],
-    "jsx": "react",
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment",
     "strict": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "types": [
+      "vite/client"
+    ]
   }
 }

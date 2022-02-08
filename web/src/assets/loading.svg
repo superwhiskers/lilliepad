@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewbox="0 0 12 6"
+  width="12"
+  height="6"
+>
+  <style>
+    @keyframes pulse {
+      0% {
+        transform: scale(1.5);
+      }
+      to {
+        opacity: 0.5;
+      }
+    }
+    
+    circle {
+      transform-origin: center;
+      animation: 1s ease-in-out var(--d) infinite alternate pulse;
+    }
+  </style>
+
+  <circle cx="3" cy="3" r="1" style="--d: -0.99s" />
+  <circle cx="6" cy="3" r="1" style="--d: -0.66s" />
+  <circle cx="9" cy="3" r="1" style="--d: -0.33s" />
+</svg>

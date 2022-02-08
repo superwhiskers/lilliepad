@@ -1,21 +1,21 @@
-import { h } from 'sinuous'
-import { Icon } from './icon'
+import './styles/Tab.scss'
+import { Component, JSX } from 'solid-js'
+import { Icon } from './Icon'
+import { IconName } from '../types/icons'
 
-import styles from './styles/tab.module.css'
-
-interface SearchProps {
-  name?: string
+type Service = "telegram" | "discord"
+type TabProps = JSX.HTMLAttributes<HTMLDivElement> & {
+  name: string
+  service: Service;
 }
 
-// todo: in future have a border/color/icon indicator to show what service the tab is
-// todo: maybe make tabs an Item
-
-export const Tab = (props: SearchProps = {}) => {
-  const { name } = props ?? {}
-  return (
-    <div class={styles.tab}>
-      <span class="truncate-text flex-1">{name}</span>
-      <button class={styles.close} aria-label="Close"><Icon name="x" /></button>
-    </div>
-  )
+export const Tab: Component<TabProps> = (props) => {
+  return <div class="Tab" {...props}>
+    <Icon class="icon" name={`brand-${props.service}`} size="16" />
+    {/* <img class="icon" src={ICONS[props.service]} /> */}
+    <div class="tag name truncate-text">{props.name}</div>
+    <button class="close" title="Close tab">
+      <Icon name="x" size="16" />
+    </button>
+  </div>
 }

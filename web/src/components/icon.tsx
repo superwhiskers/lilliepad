@@ -1,6 +1,20 @@
-import { hs as h } from 'sinuous'
+import './styles/Icon.scss'
+import sprites from '../assets/icons/tabler-sprite.svg'
 
-export const Icon = ({ name }: { name: string }) =>
-  <svg aria-hidden="true">
-    <use href={`/lib/@tabler/icons/tabler-sprite.svg#tabler-${name}`}></use>
-  </svg>
+import { Component, JSX, splitProps } from "solid-js"
+import { IconName } from '../types/icons'
+
+type IconProps = JSX.SvgSVGAttributes<SVGSVGElement> & {
+  name: IconName
+  size?: number | string
+}
+
+export const Icon: Component<IconProps> = ({ name, size = 24, ...attrs }) => {
+  const [local, others] = splitProps(attrs, ['class']);
+
+  return (
+    <svg class="Icon" aria-hidden="true" width={size} height={size} {...others}>
+      <use href={`${sprites}#tabler-${name}`} width="100%" height="100%" />
+    </svg>
+  )
+}

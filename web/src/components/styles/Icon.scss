@@ -1,0 +1,7 @@
+.Icon {
+  stroke-width: 1.5px;
+
+  @media (prefers-color-scheme: dark) {
+    stroke-width: 2px;
+  }
+}

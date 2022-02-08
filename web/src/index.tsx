@@ -1,114 +1,53 @@
-import './css'
+/* @refresh reload */
 
-import { h } from 'sinuous'
-import { map } from 'sinuous/map'
-import { o, Observable, on } from 'sinuous/observable'
+import { Portal, render } from "solid-js/web"
+import "./index.scss"
 
-import { Search } from './components/search'
-import { Tab } from './components/tab'
-import { Fragment } from './components/fragment'
-import { InputArea } from './components/input-area'
-import { Message } from './components/message'
-import { Item } from './components/item'
-import { Icon } from './components/icon'
-import styles from './styles/app.module.css'
+import { App } from "./App"
+import { Search, toggleSearch } from "./Search"
+import { Show, Suspense } from "solid-js"
+import { RevoltClientProvider, useRevolt } from './state/revolt'
+import { createRenderEffect } from "solid-js"
+import { Router } from "solid-app-router"
 
-import type { Message as IMessage } from './types/message'
+const $search = document.getElementById("search")!
+const $loading = document.getElementById('loading')!
 
-import { scrollToBottom } from './utils.js'
-Fragment // use fragment so it's not removed
+const Root = () => {
+  const revolt = useRevolt()
 
-import * as state from './state'
-
-state.search.history(
-  Array(20)
-    .fill(0)
-    .map((_, i) => ({
-      id: i,
-      name: '#general',
-      icon: 'https://avatars1.githubusercontent.com/u/10212424',
-      desc: 'GeneralChat',
-    }))
-)
-
-const default_message = (id: number): IMessage => ({
-  id: id,
-  timestamp: Date.now(),
-  content: {
-    text: 'Hello world!',
-  },
-  author: {
-    id: 0,
-    username: 'bree',
-    avatar_url: 'https://avatars1.githubusercontent.com/u/11599528?s=48',
-  },
-})
-
-const messages: Observable<IMessage[]> = o(
-  Array(20)
-    .fill(0)
-    .map((_, i) => default_message(i))
-)
-
-const Messages = (
-  <div class={styles.messages}>
-    {map(messages, (msg) => (
-      <Message
-        data-key={msg.id}
-        displayName={msg.author.username}
-        icon={msg.author.avatar_url}
-        time={msg.timestamp}
-      >
-        {msg.content.text}
-      </Message>
-    ))}
-  </div>
-)
-
-setInterval(
-  () => {
-    let msgs = messages();
-    if (msgs.length < 100) {
-      messages(msgs.concat([default_message(Date.now())]))
+  createRenderEffect(() => {
+    if (revolt.state.ready) {
+      document.body.classList.remove('loading')
     }
-  },
-  2000
-)
+  })
 
-// todo: improve perforamnce here
-on([messages], () => {
-  const scrollBottom = Messages.scrollHeight - Messages.scrollTop - Messages.clientHeight
-  const lastElement = Messages.lastElementChild
-  if (lastElement) {
-    const lastHeight = Messages.lastElementChild?.clientHeight ?? 0
-    if (scrollBottom < lastHeight) {
-      lastElement.scrollIntoView()
-    }
-  }
-})
-
-const app = (
-  <>
-    <Search enabled={state.search.enabled} results={state.search.history} />
-    <nav class={styles.navbar}>
-      <Tab name="general" />
-      <button
-        class={styles.search}
-        attrs={{ role: 'button' }}
-        onClick={state.search.toggle}
-        aria-label="Search"
-      >
-        {/* todo: actual icons maybe */}
-        <Icon name="search" />
-      </button>
-    </nav>
-    {Messages}
-    <InputArea />
+  return <>
+    <Show when={revolt.state.ready}>
+      <App />
+      <Portal mount={$search}>
+        <Search />
+      </Portal>
+    </Show>
+    <Portal mount={$loading}>
+      <h1 class="logo">[ lilliepad ]</h1>
+      <div class="info">Loading...</div>
+    </Portal>
   </>
-)
-
-async function main() {
-  document.body.append(app)
 }
 
-main()
+render(() => (
+  <Router>
+    <RevoltClientProvider>
+      <Root />
+    </RevoltClientProvider>
+  </Router>
+), document.getElementById("root")!)
+
+
+window.addEventListener('keydown', event => {
+  if (event.ctrlKey && event.key === 'p') {
+    event.preventDefault()
+    toggleSearch()
+  }
+})

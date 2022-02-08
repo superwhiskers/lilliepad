@@ -1,37 +1,49 @@
-import { h } from 'sinuous'
-import styles from './styles/message.module.css'
-import { timeAgo } from '../utils/time_ago'
+import './styles/Message.scss'
 
-interface MessageProps {
-  // todo: just add a user: User prop
-  icon?: string
-  displayName?: string
-  children?: string
-  // todo: allow for time to be omitted
-  time: number
+import { Component, createResource, JSX, Show } from "solid-js"
+import { Message as RevoltMessage } from '../revolt/api/types/messages'
+import { DeepReadonly } from 'solid-js/store'
+import { useRevolt } from '../state/revolt'
+
+import * as ulid from 'ulid'
+import { generateDefaultAvatarUrl } from '../revolt/api/users'
+
+type MessageProps = JSX.HTMLAttributes<HTMLDivElement> & {
+  message: DeepReadonly<RevoltMessage>
 }
 
-// todo: maybe use Item for message
+const dtf = new Intl.DateTimeFormat([], {
+  timeStyle: "short"
+})
 
-export const Message = (props: MessageProps, children: any) => {
-  return (
-    <article class={styles.message}>
-      <div class={styles.user}>
-        <img class="icon" src={props.icon} width={24} height={24} alt={`${props.displayName}'s avatar`} />
-      </div>
-      <div class="flex-1 flex-y">
-        <div class={styles.header}>
-          <div class={styles.displayName}>{props.displayName}</div>
-          <time
-            class={styles.time}
-            title={`sent ${props.time}`}
-            dateTime={new Date(props.time).toISOString()}
-          >
-            {timeAgo(props.time)}
-          </time>
-        </div>
-        <main class={styles.main}>{children}</main>
-      </div>
-    </article>
-  )
+export const Message: Component<MessageProps> = ({ message, ...divProps }) => {
+  const revolt = useRevolt()
+  const [author] = createResource(message.author, a => revolt.fetchUser(a))
+
+  const timestamp = ulid.decodeTime(message._id)
+
+  return <div class="Message" {...divProps}>
+    <img
+      class="avatar"
+      src={message.masquerade?.avatar ?? author() ? revolt.getAvatarUrl(author()!) : generateDefaultAvatarUrl(message.author)}
+      // intetionally like this to follow the spec.
+      // https://html.spec.whatwg.org/multipage/images.html#ancillary-images
+      alt=""
+      height={20}
+      width={20}
+      aria-hidden="true"
+    />
+    <div class="username">{message.masquerade?.name ?? author()?.username}</div>
+    <div class="tags">
+      <Show when={message.edited != null}>
+        <time class="tag" dateTime={new Date(message.edited!.$date).toISOString()}>
+          message:edited {dtf.format(new Date(message.edited!.$date))}
+        </time>
+      </Show>
+      <time class="tag" dateTime={new Date(timestamp).toISOString()}>
+        {dtf.format(timestamp)}
+      </time>
+    </div>
+    <div class="message-text" textContent={typeof message.content === 'string' ? message.content : message.content.type} />
+  </div>
 }

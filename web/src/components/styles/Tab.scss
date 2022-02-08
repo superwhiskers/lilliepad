@@ -1,0 +1,47 @@
+.Tab {
+  display: flex;
+  align-items: center;
+  gap: 0.75ch;
+
+  padding-inline: 1ch;
+
+  cursor: ew-resize;
+  user-select: none;
+
+  flex: 1;
+
+  .icon {
+    flex-shrink: 0;
+  }
+
+  .name {
+    flex: 1;
+  }
+
+  .close {
+    color: inherit;
+    border: unset;
+    padding: unset;
+    background: unset;
+
+    cursor: pointer;
+
+    display: grid;
+    align-items: center;
+    justify-content: center;
+
+    // deal with this later
+    // height: var(--tab-height);
+    // aspect-ratio: 1 / 1;
+  }
+
+  position: relative;
+  &:not(:last-of-type)::after {
+    position: absolute;
+    left: calc(100% - 1px);
+
+    content: "\A";
+    height: 75%;
+    border-inline-end: 1px solid rgb(var(--color-primary));
+  }
+}

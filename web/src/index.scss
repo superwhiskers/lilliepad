@@ -1,0 +1,195 @@
+@font-face {
+  font-family: "Go Mono";
+  src: url("./assets/fonts/Go-Mono.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --color-black: 10, 10, 10;
+  --color-grey: 120, 120, 120;
+  --color-white: 250, 250, 250;
+
+  @media (prefers-color-scheme: light) {
+    --color-primary: 233, 201, 255;
+
+    --primary-background: rgb(var(--color-white));
+    --primary-text-color: rgb(var(--color-black));
+
+    --secondary-background: rgb(240, 240, 240);
+
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    --color-primary: 133, 101, 196;
+
+    --primary-background: rgb(27, 27, 36);
+    --primary-text-color: rgb(var(--color-white));
+
+    --secondary-background: #25252e;
+
+    color-scheme: dark;
+  }
+
+  --tag-color: rgb(var(--color-primary));
+}
+
+:root {
+  color: var(--primary-text-color);
+  background: var(--primary-background);
+  font-family: system-ui;
+}
+
+// My version of a CSS "strict" mode
+// Improves performance in chrome :shrug:
+* {
+  contain: content;
+}
+
+// Defaults, maybe change in the future to a utility class
+* {
+  box-sizing: border-box;
+  overscroll-behavior: none;
+}
+
+@keyframes hide {
+  0% {
+    visibility: visible;
+    opacity: 100%;
+  }
+  // Make unselectable once starts to avoid issues
+  1% {
+    pointer-events: none;
+  }
+  100% {
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0%;
+    // transform: scale(1.15);
+  }
+}
+
+textarea.resize.resize {
+  overflow-x: hidden;
+  height: calc(var(--lines, 1) * var(--line-height));
+}
+
+body {
+  display: grid;
+  margin: 0;
+  overflow: hidden;
+
+  height: 100vh;
+  width: 100vw;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+
+  &.loading #loading {
+    animation-play-state: paused;
+  }
+}
+
+.button,
+button {
+  padding: 1ch;
+  padding-top: 2ch;
+
+  color: currentColor;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  display: inline-block;
+}
+
+button:active,
+button:hover,
+.button:active,
+.button:hover,
+a[role="button"]:active,
+a[role="button"]:focus-within,
+a[role="button"]:hover {
+  color: #8888cc;
+}
+
+button:focus-visible,
+.button:focus-visible,
+.button:focus-within,
+a[role="button"]:focus-visible {
+  outline: 2px solid #8498db;
+}
+
+#loading {
+  background: var(--primary-background);
+  display: grid;
+  animation: 0.5s hide;
+  animation-fill-mode: forwards;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    place-content: center;
+
+    .logo {
+      color: invert(rgb(106, 203, 115));
+    }
+  }
+}
+
+// temporary
+#search {
+  background-color: var(--secondary-background);
+
+  display: grid;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+
+  &:not(.visible) {
+    visibility: hidden;
+  }
+}
+
+.tag {
+  display: inline-flex;
+  place-items: center;
+  gap: 0.25ch;
+  white-space: nowrap;
+
+  font-family: "Go Mono", monospace;
+}
+
+.tag:not(.styling-minimal) {
+  font-size: 0.8rem;
+
+  /* theme */
+  background-color: var(--tag-color);
+  padding-inline: 1ch;
+  border-radius: 1rem;
+}
+
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// h
+.scrollbar.scrollbar {
+  scrollbar-color: var(--scrollbar-color) var(--scrollbar-background-color);
+  scrollbar-width: thin;
+}
+
+.sr-only {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}

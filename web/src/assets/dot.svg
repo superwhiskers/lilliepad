@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewbox="0 0 16 16"
+  width="16"
+  height="16"
+>
+  <style>
+    #dot,
+    #dot-last {
+      fill: rgb(255 255 255 / 0.15);
+    }
+  </style>
+
+  <defs>
+    <circle id="dot" cx="2" cy="2" r="0.25" />
+    <circle id="dot-last" cx="2" cy="2" r="0.25" />
+
+    <g id="dotline">
+      <use x="0" y="0" href="#dot" />
+      <use x="4" y="0" href="#dot" />
+      <use x="8" y="0" href="#dot" />
+      <use x="12" y="0" href="#dot" />
+    </g>
+
+    <g id="dotline-last">
+      <use x="0" y="0" href="#dot" />
+      <use x="4" y="0" href="#dot" />
+      <use x="8" y="0" href="#dot" />
+      <use x="12" y="0" href="#dot-last" />
+    </g>
+  </defs>
+
+  <use x="0" y="0" href="#dotline" />
+  <use x="0" y="4" href="#dotline" />
+  <use x="0" y="8" href="#dotline" />
+  <use x="0" y="12" href="#dotline-last" />
+</svg>

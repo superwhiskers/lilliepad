@@ -1,0 +1,46 @@
+// todo: switch to grid
+.Search {
+  --tab-height: 2rem;
+
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  .item {
+    min-height: var(--tab-height);
+    padding: 0.5rem;
+    contain: content;
+    content-visibility: auto;
+  }
+
+  header {
+    height: var(--tab-height);
+  }
+  
+  input {
+    all: unset;
+    
+    flex: 1;
+    padding: 0 1ch;
+    white-space: pre;
+
+    max-height: 55vh;
+    width: 100%;
+
+    caret-color: rgb(var(--color-primary));
+
+    overflow-y: auto;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+  }
+
+  li[aria-selected=true] {
+    background-color: #443344;
+  }
+}

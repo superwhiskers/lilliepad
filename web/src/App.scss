@@ -1,0 +1,98 @@
+#root {
+  --tab-height: 2rem;
+  --msg-height: 3rem;
+
+  --line-height: 2.2ex;
+  line-height: var(--line-height);
+}
+
+:where(button, .button).icon {
+  // reset button
+  all: unset;
+  color: inherit;
+  cursor: pointer;
+
+  // align
+  display: grid;
+  place-items: center;
+}
+
+.App {
+  display: grid;
+  grid-template-rows: var(--tab-height) 1fr auto;
+  height: 100vh;
+}
+
+header {
+  display: flex;
+  flex-wrap: nowrap;
+  max-width: 100vw;
+
+  border-block-end: 1px solid rgb(var(--color-primary));
+
+  > .search {
+    position: relative;
+    // grid-area: 1 / 1;
+    width: 1.25rem;
+    padding-inline: 0.75ch;
+    // border-radius: 0 100% 100% 0;
+    // background-color: red;
+    // height: 1.25rem;
+
+    // &::after {
+    //   position: absolute;
+    //   left: calc(100% - 1px);
+
+    //   content: "\A";
+    //   height: 75%;
+    //   border-inline-end: 1px solid rgb(var(--color-primary));
+    // }
+  }
+}
+
+.tabs {
+  display: flex;
+  // gap: 0.5ch;
+  // padding-inline: 0.75ch;
+  // grid-area: 1 / 1;
+  flex: 1;
+
+  overflow-x: scroll;
+  scrollbar-width: none;
+
+  // hide on chromium
+  overflow-x: overlay;
+  &::-webkit-scrollbar {
+    visibility: hidden;
+  }
+
+  .Tab:first-child {
+    // padding-inline-start: 0.5ch;
+  }
+}
+
+.msg-container {
+  overflow: auto;
+
+  display: flex;
+  flex-direction: column-reverse;
+
+  background-color: var(--primary-background);
+}
+
+.msgs {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+// todo: tabbing accessability
+// button:focus-visible {
+//   position: relative;
+// }
+// button:focus-visible::after {
+//   position: absolute;
+//   content: "\A";
+//   inset: 3px;
+//   outline: 2px solid red;
+//   // border-radius: 100px;
+// }
