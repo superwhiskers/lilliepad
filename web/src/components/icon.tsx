@@ -9,8 +9,8 @@ type IconProps = JSX.SvgSVGAttributes<SVGSVGElement> & {
   size?: number | string
 }
 
-export const Icon: Component<IconProps> = ({ name, size = 24, ...attrs }) => {
-  const [local, others] = splitProps(attrs, ['class']);
+export const Icon: Component<IconProps> = (props) => {
+  const [{ name, size }, others] = splitProps(props, ['name', 'size']);
 
   return (
     <svg class="Icon" aria-hidden="true" width={size} height={size} {...others}>
