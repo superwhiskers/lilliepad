@@ -1,7 +1,6 @@
 import uri from "mouri";
 import { Attachment } from "./types/autumn";
 
-
 const AUTUMN = `https://autumn.revolt.chat`
 
 type AttatchmentUrlOptions = {

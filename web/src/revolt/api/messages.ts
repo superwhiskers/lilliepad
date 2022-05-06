@@ -1,6 +1,6 @@
 import uri from "mouri";
 
-import { headers, HOST } from "./common";
+import { headers, HOST, handleResponse } from "./common";
 import { Id } from "./types/common";
 import {
   FetchOptions,
@@ -18,12 +18,11 @@ export const sendMessage = (
     headers,
     body: JSON.stringify(data),
   })
-    .then((res) => res.json());
+    .then(handleResponse);
 
-// TODO: fix mouri typings
-export const fetchMessages = <T extends boolean = false>(
+export const fetchMessages = <IncludeUsers extends boolean = false>(
   channel: Id,
-  params: FetchOptions<T> = {},
-): Promise<RetrievedMessages<T>> =>
+  params: FetchOptions<IncludeUsers> = {},
+): Promise<RetrievedMessages<IncludeUsers>> =>
   fetch(uri`${HOST}/channels/${channel}/messages?${params}`, { headers })
-    .then((res) => res.json());
+    .then(handleResponse);

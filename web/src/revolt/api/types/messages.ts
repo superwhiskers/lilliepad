@@ -141,7 +141,7 @@ export interface SendMessage {
   masquerade?: Masquerade;
 }
 
-export type FetchOptions<T extends boolean> = {
+export type FetchOptions<IncludeUsers extends boolean> = {
   /**
    * Maximum number of messages to fetch.
    *
@@ -172,12 +172,9 @@ export type FetchOptions<T extends boolean> = {
   /**
    * Whether to include user (and member, if server channel) objects.
    */
-  include_users?: T;
+  include_users?: IncludeUsers;
 };
 
-export type RetrievedMessages<T extends boolean> = T extends false ? Message[]
-  : {
-    messages: Message[];
-    users: User[];
-    members?: Member[];
-  };
+export type RetrievedMessages<IncludeUsers extends boolean> = IncludeUsers extends true
+  ? { messages: Message[], users: User[], members?: Member[] }
+  : Message[]

@@ -12,6 +12,7 @@ type IconProps = JSX.SvgSVGAttributes<SVGSVGElement> & {
 export const Icon: Component<IconProps> = (props) => {
   const [{ name, size }, others] = splitProps(props, ['name', 'size']);
 
+  // todo: don't import the entire thing
   return (
     <svg class="Icon" aria-hidden="true" width={size} height={size} {...others}>
       <use href={`${sprites}#tabler-${name}`} width="100%" height="100%" />

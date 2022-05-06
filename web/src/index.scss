@@ -123,6 +123,12 @@ a[role="button"]:focus-visible {
   outline: 2px solid #8498db;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 1em 0;
+  height: 3em;
+}
+
 #loading {
   background: var(--primary-background);
   display: grid;

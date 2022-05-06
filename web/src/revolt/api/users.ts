@@ -1,4 +1,4 @@
-import { headers, HOST } from "./common";
+import { headers, HOST, handleResponse } from "./common";
 import { Id } from "./types/common";
 import { User } from "./types/users";
 
@@ -6,6 +6,7 @@ const USERS = `${HOST}/users`;
 
 export const fetchUser = (id: Id): Promise<User> =>
   fetch(`${USERS}/${id}`, { headers })
-    .then((res) => res.json());
+    .then(handleResponse);
 
-export const generateDefaultAvatarUrl = (id: Id) => `${USERS}/${id}/default_avatar`;
+export const generateDefaultAvatarUrl = (id: Id) =>
+  `${USERS}/${id}/default_avatar`;
