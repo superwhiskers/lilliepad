@@ -1,4 +1,4 @@
-import type { Attachment } from "./autumn";
+import type { File } from "./autumn";
 import type { Id } from "./common";
 
 export type MemberCompositeKey = {
@@ -12,7 +12,7 @@ export type Member = {
 
   nickname?: string;
 
-  avatar?: Attachment;
+  avatar?: File;
 
   roles?: Id[];
 };
@@ -144,12 +144,12 @@ export type Server = {
   /**
    * Server icon
    */
-  icon?: Attachment;
+  icon?: File;
 
   /**
    * Server banner
    */
-  banner?: Attachment;
+  banner?: File;
 
   /**
    * Whether this server is marked as not safe for work

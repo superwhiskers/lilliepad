@@ -1,4 +1,4 @@
-import type { Attachment } from "./autumn";
+import type { File } from "./autumn";
 import type { Id } from "./common";
 import type { Server } from "./servers";
 import type { Channel } from "./channels";
@@ -33,13 +33,13 @@ export type RetrievedInvite = {
   type: "Server";
   server_id: Id;
   server_name: string;
-  server_icon?: Attachment;
-  server_banner?: Attachment;
+  server_icon?: File;
+  server_banner?: File;
   channel_id: Id;
   channel_name: string;
   channel_description?: string;
   user_name: string;
-  user_avatar?: Attachment;
+  user_avatar?: File;
   member_count: number;
 };
 

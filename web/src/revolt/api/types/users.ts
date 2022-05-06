@@ -1,4 +1,4 @@
-import type { Attachment } from "./autumn";
+import type { File } from "./autumn";
 import type { Id } from "./common";
 
 /**
@@ -91,7 +91,7 @@ export interface User {
   /**
    * User avatar
    */
-  avatar?: Attachment & { metadata: { type: "Image" } };
+  avatar?: File & { metadata: { type: "Image" } };
 
   /**
    * Relationships with other known users
@@ -153,5 +153,5 @@ export interface Profile {
   /**
    * Profile background
    */
-  background?: Attachment;
+  background?: File;
 }

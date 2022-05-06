@@ -3,9 +3,9 @@
  * @minLength 1
  * @maxLength 128
  */
-export type AttachmentId = string;
+export type FileId = string;
 
-export type AttachmentMetadata = (
+export type FileMetadata = (
   | { type: "File" }
   | { type: "Text" }
   | { type: "Audio" }
@@ -16,37 +16,48 @@ export type AttachmentMetadata = (
 /**
  * Attachment tag
  */
-export type AttachmentTag =
+export type FileTag =
   | "attachments"
   | "avatars"
   | "backgrounds"
   | "icons"
   | "banners";
 
-export type Attachment = {
-  _id: AttachmentId;
+export type File = {
+  /** @description Unique Id */
+  _id: FileId;
 
-  tag: AttachmentTag;
+  /** @description Tag / bucket this file was uploaded to */
+  tag: FileId;
+
+  /** @description Original filename */
+  filename: string;
+
+  /** @description Parsed metadata of this file */
+  metadata: FileMetadata;
+
+  /** @description Raw content type of this file */
+  content_type: string;
 
   /**
-   * File size (in bytes)
+   * Format: int
+   * @description Size of this file (in bytes)
    */
   size: number;
 
-  /**
-   * File name
-   */
-  filename: string;
+  /** @description Whether this file was deleted */
+  deleted?: boolean | null;
 
-  /**
-   * Metadata
-   */
-  metadata: AttachmentMetadata;
+  /** @description Whether this file was reported */
+  reported?: boolean | null;
 
-  /**
-   * Content type
-   */
-  content_type: string;
+  message_id?: string | null;
+  user_id?: string | null;
+  server_id?: string | null;
+
+  /** @description Id of the object this file is associated with */
+  object_id?: string | null;
+
 };
 
 /**

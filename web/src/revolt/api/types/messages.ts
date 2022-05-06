@@ -1,5 +1,5 @@
 import type { AutumnId, Id, Nonce } from "./common";
-import type { Attachment } from "./autumn";
+import type { File } from "./autumn";
 import type { JanuaryEmbed } from "./january";
 import { User } from "./users";
 import { Member } from "./servers";
@@ -46,7 +46,7 @@ export type Message = {
   /**
    * Message attachments
    */
-  attachments?: Attachment[];
+  attachments?: File[];
 
   /**
    * Unix timestamp of when message was last edited
@@ -90,7 +90,7 @@ export type TextEmbed = {
   url?: string;
   title?: string;
   description?: string;
-  media?: Attachment;
+  media?: File;
   colour?: string;
 };
 

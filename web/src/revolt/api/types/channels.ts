@@ -1,147 +1,116 @@
 import type { Id } from "./common";
-import type { Attachment } from "./autumn";
+import type { File } from "./autumn";
+import type { OverrrideField } from './permissions'
+
+// todo: permissions
+
+export type GenericServerChannel = {
+  /** @description Unique Id */
+  _id: string;
+
+  /** @description Id of the server this channel belongs to */
+  server: string;
+
+  /** @description Display name of the channel */
+  name: string;
+
+  /** @description Channel description */
+  description?: string | null;
+
+  /** @description Custom icon attachment */
+  icon?: File | null;
+
+  /** @description Default permissions assigned to users in this channel */
+  default_permissions?: OverrrideField | null;
+
+  /** @description Permissions assigned based on role to this channel */
+  role_permissions?: {
+    [key: string]: OverrrideField;
+  };
+
+  /** @description Whether this channel is marked as not safe for work */
+  nsfw?: boolean;
+};
+
 
 /**
  * Saved Messages channel has only one participant, the user who created it.
  */
 export type SavedMessagesChannel = {
-  /**
-   * Channel Id
-   */
-  _id: Id;
-
+  /** @enum {string} */
   channel_type: "SavedMessages";
 
-  /**
-   * User Id
-   */
+  /** @description Unique Id */
+  _id: Id;
+
+  /** @description Id of the user this channel belongs to */
   user: Id;
 };
 
 export type DirectMessageChannel = {
-  /**
-   * Channel Id
-   */
-  _id: Id;
-
+  /** @enum {string} */
   channel_type: "DirectMessage";
 
-  /**
-   * Whether this DM is active
-   */
+  /** @description Unique Id */
+  _id: Id;
+
+  /** @description Whether this direct message channel is currently open on both sides */
   active: boolean;
 
-  /**
-   * List of user IDs who are participating in this DM
-   */
-  recipients: Id[];
+  /** @description 2-tuple of user ids participating in direct message */
+  recipients: [Id, Id];
 
-  /**
-   * Id of the last message in this channel
-   */
-  last_message_id?: Id;
+  /** @description Id of the last message sent in this channel */
+  last_message_id?: Id | null;
+
 };
 
 export type GroupChannel = {
-  /**
-   * Channel Id
-   */
-  _id: Id;
-
+  /** @enum {string} */
   channel_type: "Group";
 
-  /**
-   * List of user IDs who are participating in this group
-   */
-  recipients: Id[];
-
-  /**
-   * Group name
-   */
-  name: string;
-
-  /**
-   * User ID of group owner
-   */
-  owner: Id;
-
-  /**
-   * Group description
-   */
-  description?: string;
-
-  /**
-   * Id of the last message in this channel
-   */
-  last_message_id?: Id;
-
-  /**
-   * Group icon
-   */
-  icon?: Attachment;
-
-  /**
-   * Permissions given to group members
-   */
-  permissions?: number;
-
-  /**
-   * Whether this channel is marked as not safe for work
-   */
-  nsfw?: boolean;
-};
-
-export type ServerChannel = {
-  /**
-   * Channel Id
-   */
+  /** @description Unique Id */
   _id: Id;
 
-  /**
-   * Server Id
-   */
-  server: Id;
-
-  /**
-   * Channel name
-   */
+  /** @description Display name of the channel */
   name: string;
 
-  /**
-   * Channel description
-   */
-  description?: string;
+  /** @description User id of the owner of the group */
+  owner: Id;
 
-  icon?: Attachment;
+  /** @description Channel description */
+  description?: string | null;
 
-  /**
-   * Permissions given to all users
-   */
-  default_permissions?: number;
+  /** @description Array of user ids participating in channel */
+  recipients: Id[];
 
-  /**
-   * Permissions given to roles
-   */
-  role_permissions?: {
-    [key: string]: number;
-  };
+  /** @description Custom icon attachment */
+  icon?: File | null;
+
+  /** @description Id of the last message sent in this channel */
+  last_message_id?: Id | null;
 
   /**
-   * Whether this channel is marked as not safe for work
+   * Format: int64
+   * @description Permissions assigned to members of this group (does not apply to the owner of the group)
    */
+  permissions?: number | null;
+
+  /** @description Whether this group is marked as not safe for work */
   nsfw?: boolean;
 };
 
-export type TextChannel = ServerChannel & {
+export type TextChannel = GenericServerChannel & {
+  /** @enum {string} */
   channel_type: "TextChannel";
 
-  /**
-   * Id of the last message in this channel
-   */
-  last_message_id?: Id;
+  /** @description Id of the last message sent in this channel */
+  last_message_id?: string | null;
+
 };
 
-export type VoiceChannel = ServerChannel & {
+export type VoiceChannel = GenericServerChannel & {
+  /** @enum {string} */
   channel_type: "VoiceChannel";
 };
 
