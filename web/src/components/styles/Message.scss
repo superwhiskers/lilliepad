@@ -13,7 +13,7 @@
   //   background-color: rgb(var(--color-black), 0.075);
   // }
 
-  img {
+  .avatar {
     border-radius: 100%;
     // technically not needed
     width: 100%;
@@ -32,5 +32,61 @@
 
     overflow-wrap: break-word;
     max-width: 100%;
+  }
+
+  .embeds {
+    grid-column: 2 / -1;
+  }
+
+  .attatchments {
+    grid-column: 2 / -1;
+    display: grid;
+    gap: 0.5ch;
+
+    .wide img {
+      min-width: 240px;
+      max-width: 420px;
+
+      height: auto;
+    }
+
+    .tall img {
+      min-height: 120px;
+      max-height: 420px;
+
+      width: auto;
+    }
+
+    video {
+      min-width: 240px;
+      max-width: 420px;
+
+      // Room to show the controls
+      min-height: 120px;
+      max-height: 420px;
+
+      aspect-ratio: var(--width) / var(--height);
+    }
+
+    .wide video {
+      height: auto;
+    }
+
+    figure {
+      all: unset;
+    }
+
+    figure.video {
+      display: flex;
+      flex-direction: column;
+    }
+
+    figcaption {
+      font-family: monospace;
+
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
   }
 }

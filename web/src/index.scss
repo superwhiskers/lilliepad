@@ -33,6 +33,8 @@
   }
 
   --tag-color: rgb(var(--color-primary));
+
+  --font-mono: "Go Mono", monospace
 }
 
 :root {
@@ -168,7 +170,7 @@ h1, h2, h3, h4, h5, h6 {
   gap: 0.25ch;
   white-space: nowrap;
 
-  font-family: "Go Mono", monospace;
+  font-family: var(--font-mono);
 }
 
 .tag:not(.styling-minimal) {

@@ -5,12 +5,18 @@
  */
 export type FileId = string;
 
+export type ImageMetadata =
+  { type: "Image"; width: number; height: number }
+
+export type VideoMetadata =
+  { type: "Video"; width: number; height: number }
+
 export type FileMetadata = (
   | { type: "File" }
   | { type: "Text" }
   | { type: "Audio" }
-  | { type: "Image"; width: number; height: number }
-  | { type: "Video"; width: number; height: number }
+  | ImageMetadata
+  | VideoMetadata
 );
 
 /**
@@ -46,17 +52,17 @@ export type File = {
   size: number;
 
   /** @description Whether this file was deleted */
-  deleted?: boolean | null;
+  deleted?: boolean;
 
   /** @description Whether this file was reported */
-  reported?: boolean | null;
+  reported?: boolean;
 
-  message_id?: string | null;
-  user_id?: string | null;
-  server_id?: string | null;
+  message_id?: string;
+  user_id?: string;
+  server_id?: string;
 
   /** @description Id of the object this file is associated with */
-  object_id?: string | null;
+  object_id?: string;
 
 };
 
