@@ -5,7 +5,7 @@ import { createStore, DeepReadonly } from "solid-js/store";
 import { Id } from "./api/types/common";
 import { RelationshipStatus, User } from "./api/types/users";
 import { Member, Server } from "./api/types/servers";
-import { Channel } from "./api/types/channels";
+import { Channel, GenericServerChannel } from "./api/types/channels";
 import { fetchUser, generateDefaultAvatarUrl } from "./api/users";
 import { fetchMessages, sendMessage } from "./api/messages";
 import {
@@ -18,8 +18,8 @@ import { ServerMessages } from "./websocket/types";
 
 import { createMemo } from "solid-js";
 import { generateAttatchmentUrl } from "./api/autumn";
-import { DEFAULT_PERMISSION_DM, U32_MAX } from "./api/permissions";
 import * as ulid from "ulid";
+import { applyOverride, DEFAULT_PERMISSION_DIRECT_MESSAGE, Permission, roleSortFn, U32_MAX, UserPermission } from "./api/permissions";
 
 // remove when `Array.prototype.groupBy` is better supported
 function groupBy<T>(
@@ -221,13 +221,18 @@ export class Client extends EventClient {
     if (options.include_users == true) {
       const { messages, users, members } = data as RetrievedMessages<true>;
 
-      setState("users", collect(users));
+      users.forEach(user => {
+        setState("users", user._id, user);
+      })
 
       if (members) {
-        setState(
-          "members",
-          groupBy(members, (m) => `${m._id.user}@${m._id.server}`),
-        );
+        members.forEach(member => {
+          setState(
+            "members",
+            `${member._id.user}@${member._id.server}`,
+            member
+          );
+        })
       }
 
       msgs = messages;
@@ -266,50 +271,102 @@ export class Client extends EventClient {
 
   getPermissions(channel: DeepReadonly<Channel>) {
     const user = this.user()!;
+    return this.calculateChannelPermissions(channel, user)
+  }
+
+  calculateServerPermissions(server: DeepReadonly<Server>, member?: DeepReadonly<Member>) {
+    if (!member) return 0
+    if (server.owner === member._id.user) return Permission.GrantAllSafe
+    let perms = server.default_permissions
+    if (member.roles && server.roles) {
+      const roles = member.roles.map(id => server.roles![id]);
+      perms = roles
+        .sort(roleSortFn)
+        .map(role => role.permissions)
+        .reduce(applyOverride, perms)
+    }
+    return perms
+  }
+
+  // not entirely sure if this is correct
+  calculateChannelPermissions(channel: DeepReadonly<Channel>, user?: DeepReadonly<User>) {
+    const [state] = this.#state
+
+    if (!user) return 0
 
     switch (channel.channel_type) {
-      case "SavedMessages": {
-        return U32_MAX;
-      }
+      case "SavedMessages": return Permission.GrantAllSafe
       case "DirectMessage": {
-        return channel.recipients.some((r) => {
-            const relationship = this.state.users[r].relationship;
-            return (
-              relationship !== RelationshipStatus.Blocked &&
-              relationship !== RelationshipStatus.BlockedOther
-            );
-          })
-          ? DEFAULT_PERMISSION_DM
-          : 0;
+        const id = channel.recipients.filter(id => id != user._id)[0]
+        const recipient = state.users[id]
+        return this.calculateRelationshipPermissions(recipient)
       }
       case "Group": {
         return channel.owner === user._id
-          ? DEFAULT_PERMISSION_DM
-          : channel.permissions ?? DEFAULT_PERMISSION_DM;
+          ? DEFAULT_PERMISSION_DIRECT_MESSAGE
+          : channel.permissions ?? DEFAULT_PERMISSION_DIRECT_MESSAGE
       }
       case "TextChannel":
-      case "VoiceChannel": {
-        const server = this.state.servers[channel.server];
+      case "VoiceChannel":
+        const server = state.servers[channel.server]
+        
+        if (server.owner === user._id) {
+          return Permission.GrantAllSafe
+        }
 
-        if (server.owner === user._id) return U32_MAX;
+        const member = this.getMember(user._id, server._id)
+        if (!member) return 0
 
-        const member = this.state.members[`${user._id}@${server._id}`] ??
-          { roles: null };
+        let perms = this.calculateServerPermissions(server, member)
+        if (channel.default_permissions) perms = applyOverride(perms, channel.default_permissions)
+        if (member.roles && channel.role_permissions && server.roles) {
+          const overrides = member.roles.map(id => [id, server.roles![id]] as const)
+            .sort((a, b) => roleSortFn(a[1], b[1]))
+            .map(role => channel.role_permissions![role[0]])
 
-        let perm =
-          (channel.default_permissions ?? server.default_permissions[1]);
+          perms = overrides.reduce(applyOverride, perms)
+        }
 
-        return (
-          member.roles?.reduce(
-            (perm, role) =>
-              perm |
-              (channel.role_permissions?.[role] ?? 0) |
-              (server.roles?.[role].permissions[1] ?? 0),
-            perm,
-          ) ?? perm
-        );
-      }
+        return perms
     }
+  }
+
+  calculateRelationshipPermissions = (user: DeepReadonly<User>): number => {
+    const [state] = this.#state
+
+    switch (user.relationship) {
+      case RelationshipStatus.User:
+      case RelationshipStatus.Friend:
+        return U32_MAX
+
+      case RelationshipStatus.Blocked:
+      case RelationshipStatus.BlockedOther:
+        return UserPermission.Access
+
+      case RelationshipStatus.Outgoing:
+      case RelationshipStatus.Incoming:
+        return UserPermission.Access
+
+      case RelationshipStatus.None: {
+        let perm = UserPermission.Access
+
+        if (state.users[user._id]) {
+          if (user.bot) {
+            perm |= UserPermission.SendMessage
+          }
+          perm |= UserPermission.ViewProfile
+        }
+
+        return perm
+      }
+
+      default:
+        throw new Error(`Unknown user relationship: '${user.relationship}'`)
+    }
+  }
+
+  getMember(userId: Id, serverId: Id): DeepReadonly<Member> | undefined {
+    return this.state.members[`${userId}@${serverId}`]
   }
 
   get state() {

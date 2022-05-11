@@ -36,14 +36,14 @@ export const Message: Component<MessageProps> = ({ message, ...props }) => {
     <div class="username">{message.masquerade?.name ?? author()?.username}</div>
     <div class="tags">
       <Show when={message.edited != null}>
-        <time class="tag" dateTime={new Date(message.edited!.$date).toISOString()}>
-          message:edited {dtf.format(new Date(message.edited!.$date))}
+        <time class="tag" dateTime={new Date(message.edited!).toISOString()}>
+          message:edited {dtf.format(new Date(message.edited!))}
         </time>
       </Show>
       <time class="tag" dateTime={new Date(timestamp).toISOString()}>
         {dtf.format(timestamp)}
       </time>
     </div>
-    <div class="message-text" textContent={typeof message.content === 'string' ? message.content : message.content.type} />
+    <div class="message-text" textContent={message.content} />
   </article>
 }

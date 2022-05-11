@@ -7,9 +7,7 @@ export type EmbedImage = {
   url: string;
 
   width: number;
-
   height: number;
-
   size: "Large" | "Preview";
 };
 
@@ -29,11 +27,11 @@ export type EmbedVideo = {
  */
 export type EmbedSpecial = (
   | { type: "None" }
-  | { type: "YouTube"; id: string; timestamp?: string }
-  | { type: "Twitch"; content_type: "Channel" | "Video" | "Clip"; id: string }
-  | { type: "Spotify"; content_type: string; id: string }
   | { type: "Soundcloud" }
+  | { type: "YouTube"; id: string; timestamp?: string }
+  | { type: "Spotify"; content_type: string; id: string }
   | { type: "Bandcamp"; content_type: "Album" | "Track"; id: string }
+  | { type: "Twitch"; content_type: "Channel" | "Video" | "Clip"; id: string }
 );
 
 export type WebsiteEmbed = {

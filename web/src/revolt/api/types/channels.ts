@@ -1,6 +1,6 @@
 import type { Id } from "./common";
 import type { File } from "./autumn";
-import type { OverrrideField } from './permissions'
+import type { OverrideField } from './permissions'
 
 // todo: permissions
 
@@ -21,11 +21,11 @@ export type GenericServerChannel = {
   icon?: File | null;
 
   /** @description Default permissions assigned to users in this channel */
-  default_permissions?: OverrrideField | null;
+  default_permissions?: OverrideField | null;
 
   /** @description Permissions assigned based on role to this channel */
   role_permissions?: {
-    [key: string]: OverrrideField;
+    [key: string]: OverrideField;
   };
 
   /** @description Whether this channel is marked as not safe for work */

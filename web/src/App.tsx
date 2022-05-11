@@ -10,6 +10,7 @@ import { Route, Routes, useParams } from "solid-app-router";
 import { toggleSearch } from "./Search";
 
 import Thread from "./routes/thread/[id]";
+import Home from './routes/home'
 
 export const App: Component = () => {
   const revolt = useRevolt()
@@ -36,6 +37,7 @@ export const App: Component = () => {
       </header>
       <Routes>
         <Route path="/thread/:id" element={<Thread />} />
+        <Route path="/" element={<Home />} />
       </Routes>
     </div>
   )

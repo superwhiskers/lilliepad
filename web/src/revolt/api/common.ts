@@ -1,4 +1,4 @@
-export const HOST = "https://staging-api.revolt.chat";
+export const HOST = "https://api.revolt.chat";
 
 // todo: make this not hardcoded..
 export let TOKEN = localStorage.getItem('TOKEN')!

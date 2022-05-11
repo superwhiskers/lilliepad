@@ -6,10 +6,10 @@ import { useRevolt } from "../../state/revolt"
 import { createThrottle } from "../../utils"
 import * as Revolt from '../../revolt/api/types/mod'
 import { Message } from "../../components/Message"
-import { ChannelPermission } from "../../revolt/api/permissions"
 import { sendMessage } from "../../revolt/api/messages"
 
 import './styles/thread.scss'
+import { Permission } from "../../revolt/api/permissions"
 
 type MessageListProps = {
   messages?: DeepReadonly<Revolt.messages.Message>[]
@@ -70,7 +70,7 @@ export default function Thread() {
       </Show>
     </div>
     <MessageForm
-      disabled={!(permissions() & ChannelPermission.SendMessage)}
+      disabled={!(permissions() & Permission.SendMessage)}
       onInput={startTyping}
       onSubmit={e => {
         sendMessage(params.id, { content: e.message })

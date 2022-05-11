@@ -1,19 +1,27 @@
 import type { File } from "./autumn";
 import type { Id } from "./common";
+import { OverrideField } from "./permissions";
 
+/** @description Composite primary key consisting of server and user id */
 export type MemberCompositeKey = {
+  /** @description Server Id */
   server: Id;
 
+  /** @description User Id */
   user: Id;
 };
 
 export type Member = {
+  /** @description Unique member id */
   _id: MemberCompositeKey;
 
+  /** @description Member's nickname */
   nickname?: string;
 
+  /** @description Avatar attachment */
   avatar?: File;
 
+  /** @description Member's roles */
   roles?: Id[];
 };
 
@@ -22,13 +30,6 @@ export type Ban = {
   reason?: string;
 };
 
-/**
- * Tuple consisting of server and channel permissions in that order
- */
-export type PermissionTuple = [
-  number,
-  number,
-];
 
 /**
  * Valid HTML colour
@@ -53,19 +54,22 @@ export type Role = {
    */
   name: string;
 
-  permissions: PermissionTuple;
-
-  colour?: Colour;
+  /** @description Permissions available to this role */
+  permissions: OverrideField;
 
   /**
-   * Whether to display this role separately on the members list
+   * @description Colour used for this role
+   *
+   * This can be any valid CSS colour
    */
+  colour?: Colour;
+
+  /** @description Whether this role should be shown separately on the member sidebar */
   hoist?: boolean;
 
   /**
-   * Role ranking
-   *
-   * A role with a smaller number will have permissions over roles with larger numbers.
+   * Format: int64
+   * @description Ranking of this role
    */
   rank?: number;
 };
@@ -83,95 +87,66 @@ export type Category = {
 export type SystemMessageChannels = {
   /** Channel ID where user join events should be sent */
   user_joined?: Id;
+
   /** Channel ID where user leave events should be sent */
   user_left?: Id;
+
   /** Channel ID where user kick events should be sent */
   user_kicked?: Id;
+
   /** Channel ID where user ban events should be sent */
   user_banned?: Id;
 };
 
 export type Server = {
-  /**
-   * Server ID
-   */
-  _id: Id;
+  /** @description Unique Id */
+  _id: string;
 
-  /**
-   * User ID of server owner
-   */
-  owner: Id;
+  /** @description User id of the owner */
+  owner: string;
 
-  /**
-   * Server name
-   */
+  /** @description Name of the server */
   name: string;
 
-  /**
-   * Server description
-   */
-  description?: string;
+  /** @description Description for the server */
+  description?: string | null;
 
-  /**
-   * Array of server channel IDs
-   */
-  channels: Id[];
+  /** @description Channels within this server */
+  channels: string[];
 
-  /**
-   * Array of server categories
-   */
-  categories?: Category[];
+  /** @description Categories for this server */
+  categories?: Category[] | null;
 
-  /**
-   * System message channels
-   *
-   * Each type of system message will be sent into the respective channel ID.
-   */
-  system_messages?: SystemMessageChannels;
+  /** @description Configuration for sending system event messages */
+  system_messages?: SystemMessageChannels | null;
 
-  /**
-   * Server roles
-   */
+  /** @description Roles for this server */
   roles?: { [key: string]: Role };
 
   /**
-   * Default permissions for all members
-   *
-   * This is a tuple consisting of server and channel permissions in that order.
+   * Format: int64
+   * @description Default set of server and channel permissions
    */
-  default_permissions: PermissionTuple;
+  default_permissions: number;
+
+  /** @description Icon attachment */
+  icon?: File | null;
+
+  /** @description Banner attachment */
+  banner?: File | null;
 
   /**
-   * Server icon
+   * Format: int32
+   * @description Enum of server flags
    */
-  icon?: File;
+  flags?: number | null;
 
-  /**
-   * Server banner
-   */
-  banner?: File;
-
-  /**
-   * Whether this server is marked as not safe for work
-   */
+  /** @description Whether this server is flagged as not safe for work */
   nsfw?: boolean;
 
-  /**
-   * Server flags
-   *
-   * `1`: Official Revolt server
-   * `2`: Verified community server
-   */
-  flags?: number;
-
-  /**
-   * Whether to collect analytics on this server
-   * Enabled if server is discoverable
-   */
+  /** @description Whether to enable analytics */
   analytics?: boolean;
 
-  /**
-   * Whether this server is discoverable
-   */
+  /** @description Whether this server should be publicly discoverable */
   discoverable?: boolean;
 };
