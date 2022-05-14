@@ -1,6 +1,12 @@
+# Misc
+
+## Accessability
+
+The borders currently are too big and are cut off from view, making it hard to see what's selected for elements on the edges of overflow hidden points.
+
 # Loading
 
-When loading, `[ lilliepad　]` (refered to as the logo) should appear with the currently fetching and loading modules being presented below it.
+When loading, `[ lilliepad ]` (refered to as the logo) should appear with the currently fetching and loading modules being presented below it.
 Ex.
 ```
   [ lilliepad ]
@@ -29,6 +35,8 @@ If there still isn't enough room, the tabs will be scrolled through horizontally
 
 tdb.
 
+todo: write about structured rendering entity format
+
 ## Input Area
 
 The input area is dedicated to gathering inputs and data to send as messages.
@@ -43,4 +51,3 @@ There should be a button / icon for sending the message, idealy for touch orient
 
 If there is a maximum size of messages, file uploads, or similar limits configured then those should be displayed through a slightly hidden/faded text `3/10`, `2400/2500`.
 If it goes over it should change to a more red shade to indicate overflow.
-

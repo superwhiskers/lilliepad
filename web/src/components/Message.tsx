@@ -47,7 +47,9 @@ export const Message: Component<MessageProps> = ({ message, ...props }) => {
         {dtf.format(timestamp)}
       </time>
     </div>
-    <div class="message-text" textContent={message.content} />
+    <div class="message-text">
+      {message.content ?? <pre>{JSON.stringify(message.system)}</pre>}
+    </div>
     <Show when={message.embeds}>
       <pre class="embeds">Unable to display embeds</pre>
     </Show>

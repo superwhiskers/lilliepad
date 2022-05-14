@@ -1,6 +1,6 @@
 import './Search.scss'
 
-import { createMemo, createSignal, For, onMount } from "solid-js"
+import { createEffect, createMemo, createSignal, For, onMount } from "solid-js"
 import { ListBoxHandler } from "./controllers/listbox"
 import { useRevolt } from './state/revolt'
 import { DeepReadonly } from 'solid-js/store'
@@ -10,8 +10,10 @@ import { NavLink } from 'solid-app-router'
 import { Icon } from './components/Icon'
 
 export const $search = document.getElementById('search')!
+export const enabledSignal = createSignal(false)
+const [enabled, setEnabled] = enabledSignal;
 
-export const toggleSearch = () => $search.classList.toggle('visible')
+export const toggleSearch = () => setEnabled(prev => !prev)
 
 export const Search = () => {
   const revolt = useRevolt()
@@ -21,7 +23,7 @@ export const Search = () => {
   )
 
   const $results =
-    <ul role="listbox">
+    <ul role="listbox" id="$search-results">
       <For each={allChannels()}>
         {(ch, i) =>
           <li role="option" id={`listbox-${i()}`} class="item">
@@ -34,16 +36,25 @@ export const Search = () => {
     </ul> as HTMLUListElement
 
   const $input =
-    <input type="search" placeholder='search threads...' /> as HTMLInputElement
+    <input type="search" placeholder='search threads...' id="$search-input" aria-controls='$search-results' /> as HTMLInputElement
 
   const listbox = new ListBoxHandler($results)
   listbox.addController($input)
   listbox.addEventListener('select', e => {
-    console.log(e.detail.el)
+    // TODO: fix hackyish
+    // could work as an actual solution if needed but it doesn't feel "right"
+    e.detail.el?.querySelector('a')?.click()
+    toggleSearch()
   })
 
-  onMount(() => {
-    $input.focus()
+  // todo: gauge the accessability of this as teleporting the focus around can cause issues for screenreaders.
+  createEffect(() => {
+    if (enabled()) {
+      $search.classList.add('visible')
+      $input.focus()
+    } else {
+      $search.classList.remove('visible')
+    }
   })
 
   return <div class="Search">

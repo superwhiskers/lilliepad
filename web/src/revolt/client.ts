@@ -83,6 +83,7 @@ export class Client extends EventClient {
   });
 
   #lastPong: number | null = 0;
+  #missedPongs = 0
 
   // not ideal
   useEvent<K extends keyof ServerMessages>(
@@ -159,7 +160,14 @@ export class Client extends EventClient {
       if (this.#lastPong === null) {
         setState({ connected: false });
         console.debug("[ws]", "No pong recieved.");
+        this.#missedPongs += 1
+        if(this.#missedPongs > 3) {
+          this.#missedPongs = 0
+          console.debug("[ws]", "3 Missed pongs, attempting to reconnect... TODO")
+          this.ws!.close()
+        }
       } else {
+        this.#missedPongs = 0
         setState({ connected: true });
       }
       this.#lastPong = null;
@@ -309,7 +317,7 @@ export class Client extends EventClient {
       case "TextChannel":
       case "VoiceChannel":
         const server = state.servers[channel.server]
-        
+
         if (server.owner === user._id) {
           return Permission.GrantAllSafe
         }
